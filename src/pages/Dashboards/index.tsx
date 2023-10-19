@@ -1,6 +1,31 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Button, StyleSheet } from "react-native";
 
-const Dashborad: React.FC = () => <View/>;
+import {useAuth} from "../../contexts/auth";
 
-export default Dashborad;
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+});
+
+const Dashboard: React.FC = () => {
+    const { signOut } = useAuth();
+
+    //console.log(signed);
+
+    function handleSignOut() {
+        signOut();
+    }
+
+    return(
+        <View style={styles.container}>
+            <Button title="Sign out" onPress={handleSignOut} />
+        </View>
+    )
+}
+
+
+
+export default Dashboard;
