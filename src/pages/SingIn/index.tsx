@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
     StyleSheet,
     Text,
@@ -8,20 +8,37 @@ import {
     KeyboardAvoidingView,
     TouchableWithoutFeedback,
     Keyboard,
-    Button
+    Button,
 } from "react-native";
 import {LinearGradient} from "expo-linear-gradient";
 
-import { useAuth } from "../../contexts/auth";
+import {useAuth} from "../../contexts/auth";
+import {authenticateUser} from "../../services/authService";
+//import {dbConfig} from "../../database/dbConfig";
 
 const SignIn: React.FC = () => {
-    const { signed, user, signIn } = useAuth();
-
-    console.log(signed);
-    console.log(user);
+    const {signIn} = useAuth();
+    const [username, setUsername] = useState(""); // Estado para o nome de usuário
+    const [password, setPassword] = useState(""); // Estado para a senha
 
     function handleSignIn() {
-        signIn();
+        authenticateUser(username, password)
+            .then((user) => {
+                if (user) {
+                    // Usuário autenticado com sucesso
+                    // Chame a função 'signIn' ou navegue para a próxima tela
+                    signIn(username, password);
+                } else {
+                    // Credenciais inválidas, exiba uma mensagem de erro ao usuário
+                    console.log(
+                        "Credenciais inválidas. Por favor, tente novamente."
+                    );
+                }
+            })
+            .catch((error) => {
+                // Tratar erros de autenticação de forma apropriada
+                console.error("Erro de autenticação:", error);
+            });
     }
 
     return (
@@ -31,7 +48,7 @@ const SignIn: React.FC = () => {
                 style={styles.container}
             >
                 <KeyboardAvoidingView
-                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                    behavior={Platform.OS === "ios" ? "padding" : "height"}
                     style={styles.container}
                 >
                     <Text style={styles.h1}>Faça Seu Login</Text>
@@ -40,9 +57,10 @@ const SignIn: React.FC = () => {
                         <Text style={styles.labelLoginSenha}>USER:</Text>
 
                         <TextInput
-                            textContentType="nickname"
+                            textContentType="username"
                             style={styles.inputUserPass}
                             placeholder="Digite seu Usuário"
+                            onChangeText={(text) => setUsername(text)} // Atualize o estado 'username'
                         />
                     </View>
 
@@ -54,17 +72,16 @@ const SignIn: React.FC = () => {
                             placeholder="Digite sua Senha"
                             textContentType="password"
                             secureTextEntry={true}
+                            onChangeText={(text) => setPassword(text)} // Atualize o estado 'password'
                         />
                     </View>
 
-            
-                    <Button title="Sign in" onPress={handleSignIn} />
-                    
+                    <Button title="Sign in" onPress={() => {handleSignIn()}} />
                 </KeyboardAvoidingView>
             </LinearGradient>
         </TouchableWithoutFeedback>
     );
-}
+};
 
 export default SignIn;
 
@@ -121,5 +138,4 @@ const styles = StyleSheet.create({
         textShadowRadius: 3,
         paddingBottom: 13,
     },
-
 });

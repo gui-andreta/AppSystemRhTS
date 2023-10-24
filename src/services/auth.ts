@@ -1,21 +1,3 @@
-interface Response {
-    token: string;
-    user: {
-        name: string;
-        email: string;
-    }
-}
+import { dbConfig } from "../database/dbConfig";
 
-export function signIn(): Promise<Response>{
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve({
-                token: 'sidjkbgfiwegwsg',
-                user: {
-                    name: 'Guilherme',
-                    email: 'guilherme@hotmail.com'
-                },
-            })
-        }, 2000)
-    })
-}
+export {dbConfig};

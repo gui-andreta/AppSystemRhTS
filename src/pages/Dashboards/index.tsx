@@ -1,11 +1,11 @@
 import React from "react";
-import { View, Button, StyleSheet, Text } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import {View, Button, StyleSheet, Text} from "react-native";
+import {LinearGradient} from "expo-linear-gradient";
 
 import {useAuth} from "../../contexts/auth";
 
 const Dashboard: React.FC = () => {
-    const { user, signOut } = useAuth();
+    const {user, signOut} = useAuth();
 
     console.log(user);
 
@@ -13,7 +13,7 @@ const Dashboard: React.FC = () => {
         signOut();
     }
 
-    return(
+    return (
         <LinearGradient
             colors={["#7BD2F6", "#946DED"]}
             style={styles.container}
@@ -24,8 +24,8 @@ const Dashboard: React.FC = () => {
                 <Button title="Sign out" onPress={handleSignOut} />
             </View>
         </LinearGradient>
-    )
-}
+    );
+};
 
 export default Dashboard;
 
@@ -49,5 +49,4 @@ const styles = StyleSheet.create({
         textShadowOffset: {width: 2, height: 2},
         textShadowRadius: 3,
     },
-
 });
