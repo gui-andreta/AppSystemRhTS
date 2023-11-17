@@ -15,8 +15,8 @@ export async function authenticateUser(
         await pool.connect();
 
         const result = await pool.query`
-      SELECT * FROM Users WHERE username = ${username} AND password = ${password}
-    `;
+            SELECT * FROM Users WHERE username = ${username} AND password = ${password}
+        `;
 
         await pool.close();
 
