@@ -1,4 +1,4 @@
-import sql, {ConnectionPool} from "mssql";
+import {ConnectionPool} from "mssql";
 import { dbConfig } from "../database/dbConfig";
 
 export interface User {
