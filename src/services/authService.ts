@@ -36,12 +36,13 @@ export async function authenticateUser(
 
         const apiUrl = 'http://127.0.0.1:5290/api/Authentication';
 
-        console.log("Antes da solicitação da API");
+        console.log(username, password);
 
         const response = await axios.post(apiUrl, {
             login: username,
             senha: password,
         });
+        
         console.log("Após a solicitação da API", response);
 
         // Verificar a resposta da API
@@ -52,6 +53,7 @@ export async function authenticateUser(
                 password: password,
                 token: response.data.token,
             };
+            
         } else {
             // Credenciais inválidas
             return null;
